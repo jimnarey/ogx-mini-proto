@@ -31,6 +31,15 @@
     #define PIO_USB_DP_PIN      10 // DM = 11
     #define LED_INDICATOR_PIN   14
 
+#elif defined(CONFIG_OGXM_BOARD_RP2040_ZERO_OLED)
+    #define OGXM_BOARD          RP2040_ZERO
+    #define RGB_PXL_PIN         16
+    #define PIO_USB_DP_PIN      10 // DM = 11
+    #define LED_INDICATOR_PIN   14
+    #define I2C_SDA_PIN         14
+    #define I2C_SCL_PIN         15
+
+
 #elif defined(CONFIG_OGXM_BOARD_ADAFRUIT_FEATHER)
     #define OGXM_BOARD          ADAFRUIT_FEATHER
     #define RGB_PWR_PIN         20

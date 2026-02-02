@@ -146,6 +146,12 @@ elseif(OGXM_BOARD STREQUAL "RP2040_ZERO")
     set(EN_USB_HOST TRUE)
     set(EN_RGB TRUE)
 
+elseif(OGXM_BOARD STREQUAL "RP2040_ZERO_OLED")
+    add_compile_definitions(CONFIG_OGXM_BOARD_RP2040_ZERO_OLED=1)
+    # Mirror RP2040_ZERO defaults (optional extras can be added below)
+    set(EN_USB_HOST TRUE)
+    set(EN_RGB TRUE)
+
 # elseif(OGXM_BOARD STREQUAL "INTERNAL_4CH")
 #     set(EN_USB_HOST TRUE)
 #     set(EN_4CH TRUE)
