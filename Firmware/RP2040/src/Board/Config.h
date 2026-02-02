@@ -10,6 +10,8 @@
 #define EXTERNAL_4CH_I2C    6
 #define INTERNAL_4CH_I2C    7
 #define BOARDS_COUNT        8
+#define I2C_OLED_SDA_PIN         14
+#define I2C_OLED_SCL_PIN         15
 
 #define SYSCLOCK_KHZ 240000
 

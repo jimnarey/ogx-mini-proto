@@ -90,6 +90,8 @@ set(LIBS_BOARD
     # UART
     hardware_uart
     hardware_irq
+    # I2C
+    hardware_i2c
     #fix16
     libfixmath
 )
@@ -110,6 +112,7 @@ endif()
 add_definitions(-DMAX_GAMEPADS=${MAX_GAMEPADS})
 
 set(OGXM_BOARD "PI_PICO" CACHE STRING "Set board type, options can be found in src/board_config.h")
+set(OGXM_OLED "FALSE" CACHE BOOL "Enable OLED display support (uses I2C pins defined in src/Board/Config.h)")
 set(FLASH_SIZE_MB 2)
 set(PICO_BOARD none)
 
@@ -145,6 +148,14 @@ elseif(OGXM_BOARD STREQUAL "RP2040_ZERO")
     add_compile_definitions(CONFIG_OGXM_BOARD_RP2040_ZERO=1)
     set(EN_USB_HOST TRUE)
     set(EN_RGB TRUE)
+
+if(OGXM_OLED)
+    add_compile_definitions(CONFIG_OGXM_OLED=1)
+    # OLED feature enabled; boards should provide I2C pin defines in src/Board/Config.h
+    # Mirror RP2040_ZERO defaults are handled by the RP2040_ZERO board branch.
+    set(EN_USB_HOST TRUE)
+    set(EN_RGB TRUE)
+endif()
 
 # elseif(OGXM_BOARD STREQUAL "INTERNAL_4CH")
 #     set(EN_USB_HOST TRUE)

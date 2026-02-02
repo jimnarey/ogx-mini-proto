@@ -8,6 +8,7 @@
 #include "Board/Config.h"
 #include "Board/board_api.h"
 #include "Board/ogxm_log.h"
+#include "Board/Display.h"
 #include "Board/board_api_private/board_api_private.h"
 #include "TaskQueue/TaskQueue.h"
 
@@ -98,6 +99,8 @@ void init_board() {
         if (board_api_usbh::init) {
             board_api_usbh::init();
         }
+        // Initialize display after core board subsystems (runs on core0)
+        Display::initialize();
 
         mutex_exit(&gpio_mutex_);
     }
