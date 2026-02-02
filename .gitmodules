@@ -19,3 +19,6 @@
 [submodule "Firmware/ESP32_Blueretro"]
 	path = Firmware/ESP32_Blueretro
 	url = https://github.com/wiredopposite/BlueRetro.git
+[submodule "Firmware/external/u8g2"]
+	path = Firmware/external/u8g2
+	url = https://github.com/olikraus/u8g2

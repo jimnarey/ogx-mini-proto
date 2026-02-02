@@ -24,11 +24,13 @@ set(BLUEPAD32_ROOT ${EXTERNAL_DIR}/bluepad32)
 set(BTSTACK_ROOT ${BLUEPAD32_ROOT}/external/btstack)
 set(PICO_BTSTACK_PATH ${BTSTACK_ROOT})
 set(LIBFIXMATH_PATH ${EXTERNAL_DIR}/libfixmath)
+set(U8G2_ROOT ${EXTERNAL_DIR}/u8g2)
 
 #get_pico_sdk(${EXTERNAL_DIR} ${PICOSDK_VERSION_TAG})
 init_git_submodules(${EXTERNAL_DIR}
     ${BLUEPAD32_ROOT}
     ${PICO_TINYUSB_PATH}
+    ${U8G2_ROOT}
 )
 apply_lib_patches(${EXTERNAL_DIR})
 
@@ -72,6 +74,9 @@ set(SOURCES_BOARD
     ${SRC}/USBDevice/DeviceDriver/XInput/tud_xinput/tud_xinput.cpp
     ${SRC}/USBDevice/DeviceDriver/XboxOG/tud_xid/tud_xid.cpp
 )
+list(APPEND SOURCES_BOARD
+    ${SRC}/Board/Display.cpp
+)
 set(LIBS_BOARD
     # Base
     pico_stdlib
@@ -90,6 +95,11 @@ set(LIBS_BOARD
 )
 set(INC_DIRS_BOARD
 )
+
+file(GLOB U8G2_CSRC "${U8G2_ROOT}/csrc/*.c")
+message(STATUS "u8g2 sources globbed from ${U8G2_ROOT}/csrc")
+add_compile_definitions(U8G2_AVAILABLE=1)
+list(APPEND SOURCES_BOARD ${U8G2_CSRC})
 
 # Config options
 
@@ -369,6 +379,14 @@ pico_set_program_version(${FW_NAME} ${FW_VERSION})
 target_include_directories(${FW_NAME} PRIVATE 
     ${SRC}
 )
+
+if(EXISTS ${U8G2_ROOT})
+    message(STATUS "u8g2 found at ${U8G2_ROOT}, adding include dirs")
+    list(APPEND INC_DIRS_BOARD
+        ${U8G2_ROOT}/csrc
+        ${U8G2_ROOT}/src
+    )
+endif()
 
 if(EN_RGB)
     pico_generate_pio_header(${FW_NAME} ${SRC}/Board/Pico_WS2812/WS2812.pio)
